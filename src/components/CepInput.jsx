@@ -1,41 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hooks-helper';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { AddressContext } from '../context/AddressProvider';
 
 const defaultCep = {
   CEP: '',
 }
 
-const defaultAddress = {
-  Address: [],
-};
-
 export const CepInput = () => {
   const [formData, setForm] = useForm(defaultCep);
-  const [formAddress] = useForm(defaultAddress);
   const { CEP } = formData; 
-  const { Address } = formAddress;
+  const { address, setAddress } = useContext(AddressContext);
 
-  console.log(CEP);
-  console.log(Address);
-
-  const getAddress = () => {
+  const getAddress = (e) => {
     if ((CEP).length === 8){
           axios.get(`https://viacep.com.br/ws/${CEP}/json/`)
             .then(res => {
               const dados = res.data;
-              defaultAddress.Address.push(dados);
+              console.log(dados);
+              setAddress(dados);
+              console.log(address);
             })
         } else {
-      alert('Insira um CEP valido');
-      };
-      console.log(Address);
+            e.preventDefault();
+            alert('Insira um CEP valido');
+        };
 };
 
   return (
     <div>
-      <h1>CepInput</h1>
       <input 
         type='text'
         name='CEP'
