@@ -1,10 +1,12 @@
 import React from 'react'
 import { CepInput } from '../components/CepInput'
+import { Contact } from '../components/Contact'
 import styled from 'styled-components'
 
 export const Home = () => {
   return (
     <Container>
+      <Contact />
       <h1>Seja Bem vindo(a) à nossa página de promoções</h1>
       <CepInput />
     </Container>
